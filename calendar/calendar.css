@@ -1,0 +1,38 @@
+body {
+	background-color: #000000;
+	color: #ffffff;
+	font-size: 16px;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+a {
+	color: #ffffff;
+	text-decoration:none;
+}
+
+.month {
+	float:left;
+	padding: 5px;
+}
+
+.line {
+	clear:left;
+	height: 135px;
+	overflow: hidden;
+}
+
+.month_title_link {
+	
+	font-weight: bold;
+}
+
+.month > a, .month > label {
+	display: block;
+	float: left;
+	width: 24px;
+	text-align: right;
+}
+
+.day_weekend {
+	color: grey;
+}
