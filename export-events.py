@@ -1,5 +1,6 @@
 from techism.models import Event
 import csv
+import pytz
 
 with open('techism-events.csv', 'w') as csvfile:
     writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
@@ -20,8 +21,8 @@ with open('techism-events.csv', 'w') as csvfile:
     for event in events:
         row = [
             event.title.encode('utf-8'),
-            event.date_time_begin.isoformat() if event.date_time_begin else '',
-            event.date_time_end.isoformat() if event.date_time_end else '',
+            event.date_time_begin.astimezone(pytz.timezone("Europe/Berlin")).strftime("%Y-%m-%dT%H:%M:%S") if event.date_time_begin else '',
+            event.date_time_end.astimezone(pytz.timezone("Europe/Berlin")).strftime("%Y-%m-%dT%H:%M:%S") if event.date_time_end else '',
             event.url.encode('utf-8') if event.url else '',
             event.location.name.encode('utf-8') if event.location else '',
             event.location.latitude if event.location else '',
