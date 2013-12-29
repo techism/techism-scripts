@@ -25,11 +25,20 @@ def write_calendar ():
 def write_month (month):
     month_name = calendar.month_name[month].decode("utf8")
     href = '/events/' + str(CURRENT_YEAR) + '/' + str(month) + '/'
-    labels.append('<div><a class="month_title_link" href="' + href + '">' + month_name.lower() + '</a></div>')
-    cal = calendar.Calendar ()
-    for day in cal.itermonthdays(CURRENT_YEAR, month):
+    labels.append('<a class="month_title_link" href="' + href + '">' + month_name.lower() + '</a>')
+    cal = calendar.Calendar()
+    iterator = cal.itermonthdays(CURRENT_YEAR, month)
+
+    weekday_of_first = calendar.weekday(CURRENT_YEAR, month, 1)
+    _,last = calendar.monthrange(CURRENT_YEAR, month)
+    weekday_of_last = calendar.weekday(CURRENT_YEAR, month, last)
+    if weekday_of_first > 4 and weekday_of_last < 3:
+        iterator.next()
+    else:
+        labels.append('<br/>')
+
+    for day in iterator:
         write_day (month, day)
-    
 
 
 def write_day (month, day):
@@ -68,9 +77,9 @@ def get_day_class_attribute (year, month, day, current_weekday):
 with codecs.open('calendarfragment.html', 'w', 'utf-8') as f:
     f.write('<html><head>')
     f.write('<link rel="stylesheet" type="text/css" href="calendar.css">')
-    f.write('</head>')
+    f.write('</head>\n')
     write_calendar()
     for entry in labels:
-        f.write(entry)
         f.write(' ')
+        f.write(entry)
     f.write('</html>')
